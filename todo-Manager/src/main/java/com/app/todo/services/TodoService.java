@@ -23,4 +23,8 @@ public class TodoService {
         return todo;
 
     }
+
+    public List<Todo> getAllTodo() {
+        return todos;
+    }
 }

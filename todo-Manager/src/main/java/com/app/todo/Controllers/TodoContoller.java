@@ -5,11 +5,11 @@ import com.app.todo.services.TodoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Random;
 
 @RestController
@@ -24,14 +24,21 @@ public class TodoContoller {
 
 
     @PostMapping
-    public Todo createTodoHandler(@RequestBody Todo todo)
+    public ResponseEntity<Todo> createTodoHandler(@RequestBody Todo todo)
     {
         int id = random.nextInt(99999);
         todo.setId(id);
        logger.info("created Todo");
 
        Todo todo1=todoService.createTodo(todo);
-       return todo1;
+       return new ResponseEntity<>(todo1, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Todo>> getAllTodoHandler()
+    {
+       List<Todo> allTodos= todoService.getAllTodo();
+       return new ResponseEntity<>(allTodos, HttpStatus.OK);
     }
 
 
