@@ -59,6 +59,15 @@ public class TodoContoller {
         return ResponseEntity.ok(todo1);
     }
 
+    @DeleteMapping("/{todoId}")
+    public ResponseEntity<String> deleteTodoHandler(@PathVariable int todoId)
+    {
+
+        todoService.deleteTodo(todoId);
+        return ResponseEntity.ok("Delete todo successful");
+
+    }
+    
    
 
 }
