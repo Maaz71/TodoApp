@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -29,6 +30,8 @@ public class TodoContoller {
         int id = random.nextInt(99999);
         todo.setId(id);
        logger.info("created Todo");
+       Date date = new Date();
+       todo.setCurrDate(date);
 
        Todo todo1=todoService.createTodo(todo);
        return new ResponseEntity<>(todo1, HttpStatus.CREATED);
@@ -41,5 +44,21 @@ public class TodoContoller {
        return new ResponseEntity<>(allTodos, HttpStatus.OK);
     }
 
+    @GetMapping("/{todoId}")
+    public ResponseEntity<Todo> getSingleTodoController(@PathVariable int todoId)
+    {
+        Todo todo1=todoService.getTodo(todoId);
+        return ResponseEntity.ok(todo1);
+
+    }
+
+    @PutMapping("/{todoId}")
+    public ResponseEntity<Todo> updateTodoController(@RequestBody Todo updatedTodo, @PathVariable int todoId)
+    {
+        Todo todo1=todoService.updateTodo(todoId, updatedTodo);
+        return ResponseEntity.ok(todo1);
+    }
+
+   
 
 }
