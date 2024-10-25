@@ -1,13 +1,15 @@
 package com.app.todo.Controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.util.StreamUtils;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Arrays;
 
 @RestController
@@ -36,5 +38,20 @@ public class FileController {
         });
 
         return "Multi-file test";
+    }
+
+    @GetMapping("/serve-image")
+    public void serveImageHandler(HttpServletResponse response)
+    {
+        try{
+            InputStream fileInput= new FileInputStream("images/docker.jpg");
+            response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+            StreamUtils.copy(fileInput,response.getOutputStream());
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
