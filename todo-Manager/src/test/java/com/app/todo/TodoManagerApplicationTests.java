@@ -1,13 +1,14 @@
 package com.app.todo;
 
-import org.junit.jupiter.api.Test;
+
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TodoManagerApplicationTests {
+public class TodoManagerApplicationTests {
 
 	@Test
-	void contextLoads() {
+    public void contextLoads() {
 	}
 
 }

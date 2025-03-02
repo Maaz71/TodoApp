@@ -1,6 +1,7 @@
 package com.app.todo.Controllers;
 
 import com.app.todo.pojos.Todo;
+import com.app.todo.services.TodoJpaServiceImpl;
 import com.app.todo.services.TodoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -20,7 +22,7 @@ public class TodoContoller {
     Logger logger = LoggerFactory.getLogger(TodoContoller.class);
 
     @Autowired
-    private TodoService todoService;
+    private TodoJpaServiceImpl todoService;
     Random random = new Random();
 
 
@@ -40,13 +42,12 @@ public class TodoContoller {
     @GetMapping
     public ResponseEntity<List<Todo>> getAllTodoHandler()
     {
-       List<Todo> allTodos= todoService.getAllTodo();
+       List<Todo> allTodos= todoService.getAllTodos();
        return new ResponseEntity<>(allTodos, HttpStatus.OK);
     }
 
     @GetMapping("/{todoId}")
-    public ResponseEntity<Todo> getSingleTodoController(@PathVariable int todoId)
-    {
+    public ResponseEntity<Todo> getSingleTodoController(@PathVariable int todoId) throws ParseException {
         Todo todo1=todoService.getTodo(todoId);
         return ResponseEntity.ok(todo1);
 
